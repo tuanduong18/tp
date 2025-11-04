@@ -80,6 +80,8 @@ If you're comfortable typing commands (like using Slack or Discord), SummonersBo
 10. [Command Summary](#command-summary)
 11. [Appendix](#appendix)
     - [Supported Champions](#supported-champions)
+    - [Auto-Group Algorithm Details](#auto-group-algorithm-details)
+    - [Understanding Rank-Ordered Teams](#understanding-rank-ordered-teams)
 
 ---
 ## Quick Start
@@ -1336,7 +1338,7 @@ Note: This list is current as of **League of Legends** Patch [25.21]. Support fo
 [Back to Top](#summonersbook-user-guide)
 
 ---
-#### Algorithm Details
+## Auto-Group Algorithm Details
 
 The auto-grouping feature uses a greedy role-based matching algorithm that prioritizes rank within each role while handling champion conflicts.
 
