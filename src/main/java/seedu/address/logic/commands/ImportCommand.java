@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.IOException;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 
@@ -26,6 +27,8 @@ public class ImportCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Imports players from a CSV.\n"
             + "Parameters: import players from FILEPATH\n"
             + "Example: import players from data/new_players.csv";
+    public static final String MESSAGE_FILE_NOT_FOUND = "Failed to import: file not found at %s";
+    public static final String MESSAGE_IMPORT_FAILED = "Failed to import: %s";
 
     private final Path path;
 
@@ -56,11 +59,11 @@ public class ImportCommand extends Command {
             CsvImporter.Result result = CsvImporter.importPlayers(model, path);
             return new CommandResult(buildSuccessMessage(result));
         } catch (NoSuchFileException e) {
-            throw new CommandException("Failed to import: file not found at " + path);
+            throw new CommandException(String.format(MESSAGE_FILE_NOT_FOUND, path));
         } catch (InvalidCsvException | ParseException e) {
             throw new CommandException(e.getMessage());
-        } catch (Exception e) {
-            throw new CommandException("Failed to import: " + e.getMessage());
+        } catch (IOException e) {
+            throw new CommandException(String.format(MESSAGE_IMPORT_FAILED, e.getMessage()));
         }
     }
 

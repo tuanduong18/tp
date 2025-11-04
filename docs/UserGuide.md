@@ -867,7 +867,7 @@ ungroup all
 
 ### Exporting data: `export`
 
-Exports player or team data from SummonersBook into a CSV file. You can export either players or teams, optionally specifying a custom file path.
+Exports player or team data into a CSV file for backup or analysis. You may specify a custom save location.
 
 **Format:**
 ```
@@ -878,12 +878,13 @@ or
 export teams [to CUSTOM_PATH]
 ```
 
-**How it works:**
-* If no custom path is provided, exports are saved to:
-    - `data/players.csv` for player data
-    - `data/teams.csv` for team data
-* Each CSV file contains structured data for easy re-import or analysis (e.g., Excel, Google Sheets).
-* Custom paths must end with `.csv`.
+**Notes**
+* Default export locations:
+  - `data/players.csv`
+  - `data/teams.csv`
+* If a file already exists at the specified location, it will be overwritten.
+* Files must end with the `.csv` extension.
+* CSVs are structured for easy re-import or use in spreadsheets.
 
 **Examples:**
 * `export players`
@@ -899,7 +900,7 @@ Exported players to data/players.csv
 
 ### Importing player data: `import`
 
-Imports player information from a CSV file into SummonersBook. This is useful for restoring saved data or onboarding new players quickly.
+Imports player data from a CSV file into SummonersBook.
 
 **Format:**
 ```
@@ -911,7 +912,7 @@ import players from FILE_PATH
     - `Name,Role,Rank,Champion`
     - `Name,Role,Rank,Champion,Wins,Losses`
 * Duplicate/invalid player entries (by name and role) will be ignored automatically.
-* The file path must point to a valid `.csv` file (e.g., `data/players.csv`).
+* The file path must point to a valid `.csv` file (e.g. `data/players.csv`).
 
 **Examples:**
 * `import players from data/players.csv`
@@ -919,7 +920,7 @@ import players from FILE_PATH
 
 **Success message:**
 ```
-Imported 10 players, skipped 0 duplicates, 0 invalid row(s).
+Imported 10 player(s), skipped 0 duplicate(s), 0 invalid row(s).
 ```
 
 [Back to Top](#summonersbook-user-guide)
@@ -1047,7 +1048,7 @@ To ensure balanced and valid teams, each player in a team must have a **unique r
   - Examples:
     - for duplicate role:
       ```
-      edit 3 rl/ADC` 
+      edit 3 rl/ADC 
       ```
     - for duplicate champion:
       ```

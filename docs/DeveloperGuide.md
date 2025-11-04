@@ -1475,8 +1475,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 - 2a. The file path is invalid or cannot be written to.
-  - 2a1. SummonersBook shows an error about invalid or unwritable path.  
+  - 2a1. SummonersBook shows an error about invalid or unwritable file path.  
     Use case ends.
+- 3a. A file already exists at the target path.
+  - 3a1. SummonersBook overwrites the existing file with the new export data. 
+    Use case resumes from Step 4.
 
 ---
 
@@ -1840,21 +1843,21 @@ testers are expected to do more *exploratory* testing.
 
 1. Importing players from CSV
 
-    1. Prerequisites: Create a CSV file at `data/test_import.csv` with valid player data:
+    1. Prerequisites: Create a CSV file at `data/test_import.csv` with header "Name,Role,Rank,Champion" or "Name,Role,Rank,Champion,Wins,Losses" and valid player data:
        ```
-       Name,Role,Rank,Champion
-       TestPlayer1,Mid,Gold,Ahri
-       TestPlayer2,Top,Silver,Garen
+       Name,Role,Rank,Champion,Wins,Losses
+       TestPlayer1,Mid,Gold,Ahri,1,0
+       TestPlayer2,Top,Silver,Garen,2,0
        ```
 
     2. Test case: `import players from data/test_import.csv`<br>
-       Expected: Players are imported. Success message shows "Imported X players, skipped Y duplicates, Z invalid row(s)."
+       Expected: Players are imported. Success message displays counts of imported, duplicate, and invalid entries.
 
     3. Test case: `import players from nonexistent.csv`<br>
-       Expected: No players imported. Error message "Failed to import: file not found."
+       Expected: Error message indicates that the file was not found. No players are imported.
 
-    4. Test case: Import a CSV with invalid data (e.g., invalid rank values)<br>
-       Expected: Valid rows are imported, invalid rows are reported. Message shows count of invalid rows with sample error messages.
+    4. Test case: Import a CSV with invalid data (e.g. invalid rank values)<br>
+       Expected: Valid rows are imported and invalid ones are skipped. Message shows count of invalid and duplicate rows.
 
 2. Exporting players and teams to CSV
 
@@ -1867,7 +1870,10 @@ testers are expected to do more *exploratory* testing.
        Expected: Team data is exported to `data/teams.csv`. Success message shows "Exported team data to data/teams.csv."
 
     4. Test case: `export players to custom_path.csv`<br>
-       Expected: Player data is exported to the specified custom path. Success message confirms the export location.
+       Expected: Players data is exported to the specified custom path. Success message confirms the export location.
+
+    5. Test case: `export teams to custom_path.csv`<br>
+          Expected: Teams data is exported to the specified custom path. Success message confirms the export location.
 
 ### Saving data
 
